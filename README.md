@@ -1,18 +1,20 @@
 # DC-DC-Power-Converter
-Complete design of a DC-DC power converter capable of powering a device using a USB-C cable powered by a DC source while adhering to USB Power Delivery specs
+Collaborative design ad implementation of a DC-DC power converter capable of powering a device using a USB-C cable powered by a DC source while adhering to USB Power Delivery specs
 The specifications for the design were split in to two domains:
 
 Static:
 - Input Voltage Range = 7.5V - 24V
 - Output Voltage Range = 5V - 15V
 - Max Output Current = 3A
-- Max peak-to-peak variation in the winding less than 25% of the max output current
+- Max inductor current ripple less than 25% of the max output current
 - Max output voltage variation +/- 25mV
 
 Dynamic:
-- Response Time less than 1.5ms (to within 5%) during a step from 5V to 12V (Vin = 24V, Rout = 4Ohms)
+- Response Time less than 1.5ms (to within 5%) during a step from 5V to 12V
+  (Vin = 24V, Rout = 4Ohms)
 - Overshoot: Less than 5% during voltage steps
-- Load Step Recovery: Voltage error less than 100mV within 1ms after load transition (Vout=5V, Vin=24V, R[load] passes from 3 kOhms to 4 Ohms)
+- Load Step Recovery: Voltage error less than 100mV within 1ms after load transition
+  (Vout=5V, Vin=24V, R[load] passes from 3 kOhms to 4 Ohms)
 - Max 2.5V overshoot during a load step (from 3A to 0A)
 
 # Project Structure
@@ -42,7 +44,7 @@ DC-DC Power Converter/
 
 ## Design and size closed loop and open loop Buck Converter using MATLAB Simulink
 
-Using real world RS components available online we sized components to achieve the above specifications with an approximate efficiency of 90% for the open loop design.
+Using commercially available components sourced from RS components we employed MATLAB Simulink to meet the specified operating requirements while maintaining an approximate efficiency of 90% for the open loop design.
 
 <div align="center">
 
@@ -79,6 +81,8 @@ The closed loop design incorporated an adjustable PID regulator to respond to a 
 
 ## Soldering Standardised routing provided by module coordinators
 
+The PCB was assembled using the standardised routing and board design provided by the module coordinators. Surface-mount and through-hole components were soldered and the assembled board was physically tested
+
 <div align="center">
 
 ![Board Top Layer](images/Physical_Board_Top_Layer.jpeg)
@@ -106,11 +110,12 @@ The User interface was implemented using an OLED screen, rotary encoder and butt
 - Closed Loop - Constantly updates the duty cycle using PI in response to fluctuations in the load size to maintain desired voltage output.
 - PDO - The controller negotiates the USB-C contract and the firmware reads the agreed profile (5/9/12/15V) and then the PI maintains this level
 
-Direct Memory Access is used for efficient sampling and the PWM output. The ADC by the internal timer and writes its three channels straight to memory. The PWM duty cycle is streamed from a double-buffered array so it can be updated without disturbing the running output. It is 8 bits (0-255) due to the timer's 256-count period.To reduce computational overhead the PI controller coefficents were scaled up in order to avoid floating point values instead completing integer calculations. 
+Direct Memory Access is used for efficient sampling and the PWM output. The ADC is triggered by the internal timer and writes its three channels straight to memory. The PWM duty cycle is updated from a double-buffered array so it can be updated without disturbing the running output. It is 8 bits (0-255) due to the timer's 256-count period. To reduce computational overhead the PI controller coefficients were scaled to allow integer calculations and o avoid the alternative floating point values.
 
 **Notes/Limitations**
 - Much of the code's comments are in French as this project was completed during an ERASMUS programme.
 - Sections not chosen under the scope: Energy and Power calculations; overload protection; output filtering
+- The functionality of the circuit board and micrcontroller code was verified in person, hence there are no results to provide
 
 # My Contributions
 Most tasks were completed collaboratively, the following our sections I contributed to directly.
