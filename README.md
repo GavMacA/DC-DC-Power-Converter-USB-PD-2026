@@ -1,5 +1,5 @@
 # DC-DC-Power-Converter
-Collaborative design ad implementation of a DC-DC power converter capable of powering a device using a USB-C cable powered by a DC source while adhering to USB Power Delivery specs
+Collaborative design and implementation of a DC-DC power converter capable of powering a device using a USB-C cable powered by a DC source while adhering to USB Power Delivery specs
 The specifications for the design were split in to two domains:
 
 Static:
